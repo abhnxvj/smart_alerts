@@ -45,11 +45,11 @@ def run(mock=False, sample=None, dry=False):
         stats["new"] += len(fresh)
         fresh = fresh[:25]
 
-        # step 1: cheap model screens every headline
+        # step 1: small model screens every headline
         if mock:
             scores = screen.screen_mock(h, fresh)
         else:
-            scores = screen.screen_gemini(h, fresh)
+            scores = screen.screen_openai(h, fresh)
 
         for s in scores:
             n = fresh[s["i"]]

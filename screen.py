@@ -48,29 +48,30 @@ def clean_json(text):
     return json.loads(text)
 
 
-def screen_gemini(h, news):
-    from google import genai
-    from google.genai import types
+def ask_openai(model, prompt):
+    from openai import OpenAI
 
-    client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    resp = client.chat.completions.create(
+        model=model,
+        messages=[{"role": "user", "content": prompt}],
+        response_format={"type": "json_object"},
+        temperature=0,
+    )
+    return clean_json(resp.choices[0].message.content)
+
+
+def screen_openai(h, news):
     lines = ""
     for i in range(len(news)):
         lines += str(i) + ". " + news[i]["title"] + " (" + news[i]["source"] + ")\n"
 
     prompt = SCREEN_PROMPT.format(name=h["name"], symbol=h["symbol"], lines=lines)
-    resp = client.models.generate_content(
-        model=os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
-        contents=prompt,
-        config=types.GenerateContentConfig(response_mime_type="application/json", temperature=0),
-    )
-    data = clean_json(resp.text)
+    data = ask_openai(os.getenv("SCREEN_MODEL", "gpt-4o-mini"), prompt)
     return data["items"]
 
 
 def explain_openai(h, n, events):
-    from openai import OpenAI
-
-    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     ev = ""
     for e in events:
         ev += "id " + str(e["id"]) + ": " + e["summary"] + "\n"
@@ -79,13 +80,7 @@ def explain_openai(h, n, events):
 
     prompt = EXPLAIN_PROMPT.format(name=h["name"], symbol=h["symbol"], weight=round(h["weight"] * 100),
                                    title=n["title"], source=n["source"], events=ev)
-    resp = client.chat.completions.create(
-        model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
-        messages=[{"role": "user", "content": prompt}],
-        response_format={"type": "json_object"},
-        temperature=0,
-    )
-    return clean_json(resp.choices[0].message.content)
+    return ask_openai(os.getenv("EXPLAIN_MODEL", "gpt-4o"), prompt)
 
 
 # offline versions so the pipeline can be tested without api keys
