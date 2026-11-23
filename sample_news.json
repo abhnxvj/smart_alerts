@@ -1,0 +1,72 @@
+[
+ {
+  "symbol": "RELIANCE",
+  "title": "Reliance Industries shares rise 1% in early trade",
+  "source": "Business Standard",
+  "link": "https://example.com/1",
+  "published": ""
+ },
+ {
+  "symbol": "RELIANCE",
+  "title": "Reliance to acquire stake in renewable energy firm for Rs 2,000 crore",
+  "source": "Economic Times",
+  "link": "https://example.com/2",
+  "published": ""
+ },
+ {
+  "symbol": "RELIANCE",
+  "title": "Top 5 stocks to watch today including Reliance",
+  "source": "Moneycontrol",
+  "link": "https://example.com/3",
+  "published": ""
+ },
+ {
+  "symbol": "HDFCBANK",
+  "title": "SEBI issues show-cause notice to HDFC Bank over disclosure lapse",
+  "source": "Mint",
+  "link": "https://example.com/4",
+  "published": ""
+ },
+ {
+  "symbol": "INFY",
+  "title": "Infosys Q2 results: net profit rises 8% to Rs 6,900 crore, beats estimates",
+  "source": "CNBC-TV18",
+  "link": "https://example.com/5",
+  "published": ""
+ },
+ {
+  "symbol": "INFY",
+  "title": "Infosys shares in focus ahead of market open",
+  "source": "Moneycontrol",
+  "link": "https://example.com/6",
+  "published": ""
+ },
+ {
+  "symbol": "TCS",
+  "title": "TCS wins contract from UK insurer",
+  "source": "Economic Times",
+  "link": "https://example.com/7",
+  "published": ""
+ },
+ {
+  "symbol": "ITC",
+  "title": "ITC shares flat as markets trade sideways",
+  "source": "Business Today",
+  "link": "https://example.com/8",
+  "published": ""
+ },
+ {
+  "symbol": "MARUTI",
+  "title": "Maruti Suzuki Q2 results: profit jumps 12% to Rs 3,800 crore",
+  "source": "Economic Times",
+  "link": "https://example.com/12",
+  "published": ""
+ },
+ {
+  "symbol": "ULTRACEMCO",
+  "title": "UltraTech Cement to acquire cement unit for Rs 1,800 crore",
+  "source": "Mint",
+  "link": "https://example.com/13",
+  "published": ""
+ }
+]

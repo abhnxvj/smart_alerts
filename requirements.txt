@@ -1,0 +1,4 @@
+feedparser
+google-genai
+openai
+python-dotenv
