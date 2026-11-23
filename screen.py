@@ -28,13 +28,18 @@ Events already being tracked for this holding in the last 7 days:
 {events}
 
 Tasks:
-1. If the headline is about one of the tracked events, set event_id to that id. Otherwise set event_id to null.
-2. material_change = true only if the headline adds a NEW fact (new number, new decision, new party, reversal, escalation).
-   A repeat of a tracked event in other words is NOT material.
+1. If the headline is about the same announcement, plan, deal or issue as a tracked event (even with different
+   wording or numbers), set event_id to that id. Otherwise set event_id to null.
+2. material_change = true only if the headline adds a NEW fact about the company's business:
+   a new number, decision, order, deal, party, reversal or escalation.
+   NOT material: the same announcement reported by another outlet, explainers ("what it means"),
+   stock price moves, analyst comments on news already tracked, or small extra details of a tracked event.
 3. summary: 1-2 lines, the full event so far including this headline.
-4. what_changed: 1 line, only the new part.
+4. what_changed: one plain news-style sentence under 20 words, starting with the company name.
+   Example: "Maruti Suzuki raised prices on select models by up to 0.3%."
+   Never start with "The new information" or "This headline".
 5. direction for the holding: positive, negative, mixed or unclear.
-6. why_it_matters: 1 line on why this matters for someone holding {name}. No buy/sell advice.
+6. why_it_matters: one short sentence on why this matters for someone holding {name}. No buy/sell advice.
 
 Return JSON only with keys: event_id, material_change, summary, what_changed, direction, why_it_matters"""
 

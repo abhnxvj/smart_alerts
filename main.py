@@ -23,6 +23,7 @@ def run(mock=False, sample=None, dry=False):
         all_news = news.load_sample_news(sample)
 
     alerts = []
+    alerted = []
     stats = {"fetched": 0, "new": 0, "passed_screen": 0, "material": 0}
 
     for h in holdings:
@@ -71,10 +72,15 @@ def run(mock=False, sample=None, dry=False):
             stats["material"] += 1
 
             # weight relative to an equal-weight portfolio, so 1.0 means average size
+            # one alert per story per run, even if many outlets cover it
+            if event_id in alerted:
+                continue
+
             score = s["impact"] * h["weight"] * len(holdings)
             if score < ALERT_SCORE and s["impact"] < HIGH_IMPACT:
                 continue
 
+            alerted.append(event_id)
             alerts.append({
                 "symbol": h["symbol"], "weight": h["weight"], "impact": s["impact"], "score": score,
                 "event_id": event_id, "title": n["title"], "source": n["source"], "link": n["link"],
