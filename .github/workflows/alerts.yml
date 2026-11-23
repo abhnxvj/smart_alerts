@@ -1,0 +1,41 @@
+name: smart-alerts
+
+on:
+  schedule:
+    - cron: "30 3-12 * * 1-5"   # every hour, 9:00 to 18:00 IST, Mon-Fri
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Restore seen news and tracked events
+        uses: actions/cache/restore@v4
+        with:
+          path: alerts.db
+          key: alerts-db-${{ github.run_id }}
+          restore-keys: alerts-db-
+
+      - name: Run pipeline
+        run: python main.py
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          ALERT_TO: ${{ secrets.ALERT_TO }}
+
+      - name: Save state for next run
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: alerts.db
+          key: alerts-db-${{ github.run_id }}
